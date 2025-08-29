@@ -1,41 +1,37 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "revelation",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Revelation",
+	"description": ":3",
 	"authors": [
-		"Me!"
+		"Sember",
+		"Mercury",
+		"Hollowed"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"icon": "assets/revelation/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"com.sember.revelation.Revelation"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+			"com.sember.revelation.RevelationClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"revelation.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.14",
+		"fabricloader": ">=0.17.2",
 		"minecraft": "~1.21.8",
 		"java": ">=21",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
+	"custom": {
+		"mixson": [
+			"com.sember.revelation.RevelationMixson"
+		]
 	}
 }
