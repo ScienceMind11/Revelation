@@ -1,6 +1,8 @@
 package com.sember.revelation;
 
 import com.sember.revelation.registry.RevelationLootTables;
+import com.sember.revelation.registry.RevelationMixsonHooks;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.util.Identifier;
@@ -17,7 +19,8 @@ public class Revelation implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        LootTableEvents.MODIFY.register(RevelationLootTables::addSmithingTable);
+        RevelationLootTables.register();
+        RevelationMixsonHooks.register();
 
         LOGGER.info("{} loaded", NAME);
 

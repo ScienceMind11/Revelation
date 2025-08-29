@@ -16,9 +16,13 @@ repositories {
 	mavenCentral()
 	maven { url = "https://jitpack.io" }
 
+	// Modrinth
+	maven { url = "https://api.modrinth.com/maven" }
+
 }
 
 dependencies {
+
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -27,8 +31,21 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Mixson
-	modImplementation "com.github.ramixin:mixson-fabric:${project.mixson_version}"
+	// ------
+	// Common
+
+		// Mixson
+		modImplementation "com.github.ramixin:mixson-fabric:${project.mixson_version}"
+
+	// ------
+
+	// ------
+	// Development Only
+
+		// Mod Menu
+		modCompileOnly "maven.modrinth:modmenu:${project.modmenu_version}"
+
+	// ------
 
 }
 

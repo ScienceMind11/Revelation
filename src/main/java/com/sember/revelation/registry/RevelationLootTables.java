@@ -1,5 +1,6 @@
 package com.sember.revelation.registry;
 
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -12,6 +13,12 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 
 public class RevelationLootTables {
+
+    public static void register() {
+
+        LootTableEvents.MODIFY.register(RevelationLootTables::addSmithingTable);
+
+    }
 
     public static void addSmithingTable(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries) {
 
@@ -26,12 +33,6 @@ public class RevelationLootTables {
 
         tableBuilder.pool(smithingTable);
         tableBuilder.pool(upgradeTemplate);
-
-    }
-
-    public static void alwaysDropSkull() {
-
-
 
     }
 
