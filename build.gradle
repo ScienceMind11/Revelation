@@ -19,6 +19,9 @@ repositories {
 	// Modrinth
 	maven { url = "https://api.modrinth.com/maven" }
 
+	// Ladysnake
+	maven { url = "https://maven.ladysnake.org/releases" }
+
 }
 
 dependencies {
@@ -36,6 +39,14 @@ dependencies {
 
 		// Mixson
 		modImplementation "com.github.ramixin:mixson-fabric:${project.mixson_version}"
+
+		// Cardinal Components API
+		modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+		modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+		modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-scoreboard:${project.cca_version}"
+		include "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+		include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+		include "org.ladysnake.cardinal-components-api:cardinal-components-scoreboard:${project.cca_version}"
 
 	// ------
 

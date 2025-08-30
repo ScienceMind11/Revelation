@@ -18,6 +18,9 @@
 		],
 		"client": [
 			"com.sember.revelation.RevelationClient"
+		],
+		"cardinal-components": [
+			"com.sember.revelation.registry.RevelationScoreboardComponents"
 		]
 	},
 	"mixins": [
@@ -28,5 +31,10 @@
 		"minecraft": "~1.21.8",
 		"java": ">=21",
 		"fabric-api": "*"
+	},
+	"custom": {
+		"cardinal-components": [
+			"revelation:withered"
+		]
 	}
 }

@@ -3,6 +3,8 @@
 	"package": "com.sember.revelation.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"PlayerEntityMixin",
+		"SpawnHelperMixin"
 	],
 	"client": [],
 	"injectors": {
