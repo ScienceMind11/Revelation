@@ -1,16 +1,12 @@
 package com.sember.revelation;
 
 import com.sember.revelation.component.entity.BooleanComponent;
-import com.sember.revelation.component.entity.WitheredComponent;
 import com.sember.revelation.registry.RevelationLootTables;
 import com.sember.revelation.registry.RevelationMixsonHooks;
-import com.sember.revelation.registry.RevelationScoreboardComponents;
-import com.terraformersmc.modmenu.api.ModMenuApi;
+import com.sember.revelation.registry.RevelationComponents;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.ramixin.mixson.inline.Mixson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +31,7 @@ public class Revelation implements ModInitializer {
     }
 
     public static BooleanComponent getWitheredComponent(World world) {
-        return RevelationScoreboardComponents.WITHERED.get(world.getScoreboard());
+        return RevelationComponents.WITHERED.get(world.getScoreboard());
     }
 
 }

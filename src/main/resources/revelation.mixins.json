@@ -6,7 +6,9 @@
 		"PlayerEntityMixin",
 		"SpawnHelperMixin"
 	],
-	"client": [],
+	"client": [
+		"client.MouseMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	},

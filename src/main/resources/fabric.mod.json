@@ -9,7 +9,7 @@
 		"Mercury",
 		"Hollowed"
 	],
-	"license": "CC0-1.0",
+	"license": "GNU LGPL-v3.0",
 	"icon": "assets/revelation/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -20,7 +20,7 @@
 			"com.sember.revelation.RevelationClient"
 		],
 		"cardinal-components": [
-			"com.sember.revelation.registry.RevelationScoreboardComponents"
+			"com.sember.revelation.registry.RevelationComponents"
 		]
 	},
 	"mixins": [
@@ -34,7 +34,11 @@
 	},
 	"custom": {
 		"cardinal-components": [
+			"revelation:accessories",
 			"revelation:withered"
-		]
+		],
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1657": [ "com/sember/revelation/player/AccessoryHolder" ]
+		}
 	}
 }

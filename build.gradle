@@ -54,7 +54,7 @@ dependencies {
 	// Development Only
 
 		// Mod Menu
-		modCompileOnly "maven.modrinth:modmenu:${project.modmenu_version}"
+		modRuntimeOnly "maven.modrinth:modmenu:${project.modmenu_version}"
 
 	// ------
 
