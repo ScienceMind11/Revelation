@@ -4,6 +4,7 @@ import com.sember.revelation.component.entity.BooleanComponent;
 import com.sember.revelation.registry.RevelationLootTables;
 import com.sember.revelation.registry.RevelationMixsonHooks;
 import com.sember.revelation.registry.RevelationComponents;
+import com.sember.revelation.registry.RevelationRegistries;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -19,6 +20,10 @@ public class Revelation implements ModInitializer {
     @Override
     public void onInitialize() {
 
+        // IMPORTANT: Registries are created before anything else
+        RevelationRegistries.register();
+
+        RevelationComponents.registerItemComponents();
         RevelationLootTables.register();
         RevelationMixsonHooks.register();
 
