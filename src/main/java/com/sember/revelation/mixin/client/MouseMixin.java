@@ -24,7 +24,7 @@ public class MouseMixin {
         if (!RevelationClient.OPEN_ACCESSORIES.isPressed()) return;
         if (client.player == null || client.player.isSneaking()) return;
         AccessoriesComponent accessories = RevelationComponents.ACCESSORIES.get(client.player);
-        accessories.setSelectedSlot(Scroller.scrollCycling(i, accessories.getSelectedSlot(), accessories.getNumSlots()));
+        accessories.setSelected(Scroller.scrollCycling(i, accessories.getSelected(), accessories.getSlots()));
         ci.cancel();
     }
 

@@ -48,6 +48,9 @@ dependencies {
 		include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 		include "org.ladysnake.cardinal-components-api:cardinal-components-scoreboard:${project.cca_version}"
 
+		// Raised
+		modImplementation "maven.modrinth:raised:${project.raised_version}"
+
 	// ------
 
 	// ------

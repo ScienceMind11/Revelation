@@ -3,11 +3,8 @@ package com.sember.revelation.registry;
 import com.sember.revelation.Revelation;
 import com.sember.revelation.component.entity.AccessoriesComponent;
 import com.sember.revelation.component.entity.BooleanComponent;
-import com.sember.revelation.component.entity.ListComponent;
 import com.sember.revelation.component.entity.WitheredComponent;
-import com.sember.revelation.item.AccessoryItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -29,7 +26,7 @@ public class RevelationComponents implements EntityComponentInitializer, Scorebo
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.registerFor(PlayerEntity.class, ACCESSORIES, player -> new AccessoriesComponent());
+        registry.registerFor(PlayerEntity.class, ACCESSORIES, AccessoriesComponent::new);
     }
 
     @Override

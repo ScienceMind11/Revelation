@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -28,19 +29,26 @@ public class AccessoriesHudElement {
 
         AccessoriesComponent accessories = RevelationComponents.ACCESSORIES.get(player);
 
-        int selectedSlot = accessories.getSelectedSlot();
-        int numSlots = accessories.getNumSlots();
+        int selectedSlot = accessories.getSelected();
+        int numSlots = accessories.getSlots();
         int left = (centerX - 10) + ((-numSlots / 2) * 20);
 
-        for (int i = -numSlots / 2; i < (numSlots / 2 + 1); i++) {
+        for (int i = 0; i < numSlots; i++) {
+
+            int x = i - numSlots / 2;
 
             context.drawTexture(
                     RenderPipelines.GUI_TEXTURED,
                     ACCESSORIES_TEXTURE,
-                    (centerX - 10) + (i * 20), centerY + 32,
+                    (centerX - 10) + (x * 20), centerY + 32,
                     0, 0,
                     20, 20,
                     64, 64
+            );
+
+            context.drawItem(
+                    accessories.get(i),
+                    (centerX - 10) + (x * 20) + 2, centerY + 32 + 2
             );
 
         }

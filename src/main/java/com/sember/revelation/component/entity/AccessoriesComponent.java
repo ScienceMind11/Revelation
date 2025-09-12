@@ -1,111 +1,89 @@
 package com.sember.revelation.component.entity;
 
-import com.sember.revelation.item.AccessoryItem;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import com.mojang.serialization.Codec;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtOps;
+import net.minecraft.item.Items;
 import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
-import net.minecraft.util.Identifier;
+import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.sync.C2SComponentPacketWriter;
 import org.ladysnake.cca.api.v3.entity.C2SSelfMessagingComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
-public class AccessoriesComponent implements ListComponent<ItemStack>, AutoSyncedComponent, C2SSelfMessagingComponent {
+public class AccessoriesComponent implements AutoSyncedComponent, C2SSelfMessagingComponent {
 
+    private static final int BASE_SLOTS = 5;
+
+    private final PlayerEntity provider;
+
+    private int slots;
+    private int selected;
     private List<ItemStack> accessories;
-    private int selectedSlot;
-    private int numSlots;
 
-    public AccessoriesComponent() {
-        this.accessories = new ArrayList<>(5);
-        this.selectedSlot = 0;
-        this.numSlots = 5;
+    public AccessoriesComponent(PlayerEntity provider) {
+        this.provider = provider;
+        this.slots = BASE_SLOTS;
+        this.selected = 0;
+        this.accessories = new ArrayList<>(BASE_SLOTS);
     }
 
-    @Override
-    public ItemStack get(int index) {
-        return this.accessories.get(index);
+    public ItemStack get(int slot) {
+        if (slot < 0 || slot >= this.slots || slot >= this.accessories.size() || this.accessories.get(slot) == null) return ItemStack.EMPTY;
+        return this.accessories.get(slot);
     }
 
-    @Override
-    public void add(ItemStack item) {
-        this.accessories.add(item);
+    public void set(int slot, ItemStack stack) {
+        if (slot < 0 || slot >= this.slots || slot >= this.accessories.size()) return;
+        this.accessories.set(slot, stack);
     }
 
-    @Override
-    public void remove(ItemStack item) {
-        this.accessories.remove(item);
+    public int getSelected() {
+        return this.selected;
+    }
+    public void setSelected(int selected) {
+        this.selected = selected;
+        sendC2SMessage(buf -> buf.writeInt(selected));
     }
 
-    @Override
-    public int size() {
-        return this.accessories.size();
+    public int getSlots() {
+        return this.slots;
     }
-
-    @Override
-    public List<ItemStack> getList() {
-        return this.accessories;
-    }
-
-    @Override
-    public void setList(List<ItemStack> list) {
-        this.accessories = list;
+    public void setSlots(int slots) {
+        this.slots = slots;
     }
 
     public boolean isWearing(Item item) {
         return this.accessories.stream().anyMatch(stack -> stack.getItem() == item);
     }
 
-    public boolean newAccessory(ItemStack accessory) {
-        if (this.accessories.size() >= numSlots) return false;
-        sendC2SMessage(buf -> ItemStack.PACKET_CODEC.encode(buf, accessory));
-        return true;
-    }
-
-    public int getSelectedSlot() {
-        return this.selectedSlot;
-    }
-
-    public void setSelectedSlot(int selectedSlot) {
-        this.selectedSlot = selectedSlot;
-    }
-
-    public int getNumSlots() {
-        return this.numSlots;
-    }
-
-    public void setNumSlots(int numSlots) {
-        this.numSlots = numSlots;
-    }
-
-    @Override
-    public void readData(ReadView readView) {
-        this.numSlots = readView.getInt("slots", 5);
-        this.selectedSlot = readView.getInt("selected", 0);
-        for (int i = 0; i < this.numSlots; i++) {
-            this.accessories.add(readView.read("item" + i, ItemStack.CODEC).orElse(ItemStack.EMPTY));
-        }
-    }
-
-    @Override
-    public void writeData(WriteView writeView) {
-        writeView.putInt("slots", this.numSlots);
-        writeView.putInt("selected", this.selectedSlot);
-        for (int i = 0; i < this.accessories.size(); i++) {
-            writeView.put("item" + i, ItemStack.CODEC, this.get(i));
-        }
-    }
-
     @Override
     public void handleC2SMessage(RegistryByteBuf buf) {
-        this.accessories.add(ItemStack.PACKET_CODEC.decode(buf));
+        this.selected = buf.readInt();
+    }
+
+    @Override
+    public void readData(ReadView view) {
+        this.slots = view.getInt("slots", BASE_SLOTS);
+        this.selected = view.getInt("selected", 0);
+        this.accessories = view.read("items", codec()).orElse(new ArrayList<>(this.slots));
+    }
+
+    @Override
+    public void writeData(WriteView view) {
+        view.putInt("slots", this.slots);
+        view.putInt("selected", this.selected);
+        view.put("items", codec(), this.accessories);
+    }
+
+    private Codec<List<ItemStack>> codec() {
+        return Codec.list(ItemStack.CODEC, 0, this.slots);
     }
 
 }
