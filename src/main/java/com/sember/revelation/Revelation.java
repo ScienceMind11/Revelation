@@ -7,6 +7,7 @@ import com.sember.revelation.registry.RevelationItems;
 import com.sember.revelation.registry.RevelationLootTables;
 import com.sember.revelation.registry.RevelationMixsonHooks;
 import com.sember.revelation.registry.RevelationComponents;
+import com.sember.revelation.registry.RevelationRegistries;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -24,6 +25,10 @@ public class Revelation implements ModInitializer {
     @Override
     public void onInitialize() {
 
+        // IMPORTANT: Registries are created before anything else
+        RevelationRegistries.register();
+
+        RevelationComponents.registerItemComponents();
         RevelationItems.register();
         RevelationLootTables.register();
         RevelationMixsonHooks.register();
