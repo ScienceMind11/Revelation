@@ -6,7 +6,7 @@ import net.minecraft.registry.Registry;
 
 public class RevelationActions {
 
-    public static final Action DASH = Action.create(30, (player, stack, world) -> {
+    public static final Action DASH = new Action(30, (player, stack, world) -> {
         if (world.isClient) return;
         player.setPos(player.getX(), player.getY() + 3, player.getZ());
     });

@@ -7,6 +7,7 @@
 		"SpawnHelperMixin"
 	],
 	"client": [
+		"client.DrawContextMixin",
 		"client.MouseMixin"
 	],
 	"injectors": {

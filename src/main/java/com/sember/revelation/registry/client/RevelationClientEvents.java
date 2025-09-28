@@ -1,4 +1,4 @@
-package com.sember.revelation.registry;
+package com.sember.revelation.registry.client;
 
 import com.sember.revelation.RevelationClient;
 import com.sember.revelation.network.AccessoriesPacketPayload;

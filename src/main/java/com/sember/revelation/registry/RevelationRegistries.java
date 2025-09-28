@@ -3,6 +3,7 @@ package com.sember.revelation.registry;
 import com.sember.revelation.Revelation;
 import com.sember.revelation.action.Action;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 
 public class RevelationRegistries {

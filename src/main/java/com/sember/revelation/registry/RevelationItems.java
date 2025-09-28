@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public class RevelationItems {
 
-    public static final Item ARMADILLO_HUSK = registerItem("armadillo_husk", Item::new);
+    public static final Item ARMADILLO_HUSK = registerItem("armadillo_husk", settings -> new Item(settings.component(RevelationComponents.MARKER, 2)));
 
     public static void register() {
         // Add tooltip logic & other item related initialization here later

@@ -6,30 +6,33 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.util.TriConsumer;
 
-public abstract class Action {
+public class Action {
 
-    private int cost;
+    private final int cost;
+    private final Use action;
 
-    public Action(int cost) {
+    public Action(int cost, Use action) {
         this.cost = cost;
+        this.action = action;
     }
 
-    public static Action create(int cost, TriConsumer<PlayerEntity, ItemStack, World> use) {
-        return new Action() {
-            @Override
-            public void use(PlayerEntity player, ItemStack stack, World world) {
-                use.accept(player, stack, world);
-            }
-
-            @Override
-            public int getCost() {
-                return cost;
-            }
-        };
+    public void use(PlayerEntity player, ItemStack stack, World world) {
+        this.action.use(player, stack, world);
     }
 
-    public abstract void use(PlayerEntity player, ItemStack stack, World world);
+    public int getCost() {
+        return cost;
+    }
 
-    public abstract int getCost();
+    @FunctionalInterface
+    public interface Use {
+        void use(PlayerEntity player, ItemStack stack, World world);
+    }
+
+    public enum Marker {
+        PRIMARY,
+        SECONDARY,
+        TERTIARY
+    }
 
 }
