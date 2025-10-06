@@ -13,9 +13,15 @@ public class AccessoriesPacketReceiver {
 
         PlayerEntity player = context.player();
         AccessoriesComponent accessories = RevelationComponents.ACCESSORIES.get(player);
+        int selected = payload.selected();
+
+        if (!payload.swap()) {
+            accessories.setSelected(payload.selected());
+            return;
+        }
 
         ItemStack hotbarStack = player.getMainHandStack();
-        ItemStack accessoriesStack = accessories.get(accessories.getSelected());
+        ItemStack accessoriesStack = accessories.get(selected);
 
         if (hotbarStack.isEmpty() && accessoriesStack.isEmpty()) return;
 
@@ -24,9 +30,9 @@ public class AccessoriesPacketReceiver {
             player.setStackInHand(Hand.MAIN_HAND, hotbarStack);
         } else if (accessoriesStack.isEmpty()) {
             accessoriesStack = hotbarStack.copyAndEmpty();
-            accessories.set(accessories.getSelected(), accessoriesStack);
+            accessories.set(selected, accessoriesStack);
         } else {
-            accessories.set(accessories.getSelected(), hotbarStack.copyAndEmpty());
+            accessories.set(selected, hotbarStack.copyAndEmpty());
             player.setStackInHand(Hand.MAIN_HAND, accessoriesStack.copyAndEmpty());
         }
 

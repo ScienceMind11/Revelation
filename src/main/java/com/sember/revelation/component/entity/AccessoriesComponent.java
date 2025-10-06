@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class AccessoriesComponent implements AutoSyncedComponent, C2SSelfMessagingComponent {
+public class AccessoriesComponent implements AutoSyncedComponent {
 
     private static final int BASE_SLOTS = 5;
 
@@ -49,7 +49,6 @@ public class AccessoriesComponent implements AutoSyncedComponent, C2SSelfMessagi
     }
     public void setSelected(int selected) {
         this.selected = selected;
-        sendC2SMessage(buf -> buf.writeInt(selected));
     }
 
     public int getSlots() {
@@ -61,11 +60,6 @@ public class AccessoriesComponent implements AutoSyncedComponent, C2SSelfMessagi
 
     public boolean isWearing(Item item) {
         return this.accessories.stream().anyMatch(stack -> stack.getItem() == item);
-    }
-
-    @Override
-    public void handleC2SMessage(RegistryByteBuf buf) {
-        this.selected = buf.readInt();
     }
 
     @Override

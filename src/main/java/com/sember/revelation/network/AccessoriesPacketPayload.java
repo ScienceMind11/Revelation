@@ -7,18 +7,19 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
 import net.minidev.asm.Accessor;
 
-public record AccessoriesPacketPayload(boolean bool) implements CustomPayload {
+public record AccessoriesPacketPayload(int selected, boolean swap) implements CustomPayload {
 
     public static final Id<AccessoriesPacketPayload> ID = new Id<>(Revelation.id("accessories"));
 
     public static final PacketCodec<RegistryByteBuf, AccessoriesPacketPayload> CODEC = PacketCodec.of(AccessoriesPacketPayload::write, AccessoriesPacketPayload::new);
 
     public AccessoriesPacketPayload(RegistryByteBuf buf) {
-        this(buf.readBoolean());
+        this(buf.readInt(), buf.readBoolean());
     }
 
     public void write(RegistryByteBuf buf) {
-        buf.writeBoolean(bool);
+        buf.writeInt(selected);
+        buf.writeBoolean(swap);
     }
 
     @Override
