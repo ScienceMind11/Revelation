@@ -1,5 +1,6 @@
 package com.sember.revelation.network;
 
+import com.sember.revelation.Revelation;
 import com.sember.revelation.component.entity.AccessoriesComponent;
 import com.sember.revelation.registry.RevelationComponents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -16,26 +17,28 @@ public class AccessoriesPacketReceiver {
         int selected = payload.selected();
 
         if (!payload.swap()) {
-            accessories.setSelected(payload.selected());
-            return;
-        }
-
-        ItemStack hotbarStack = player.getMainHandStack();
-        ItemStack accessoriesStack = accessories.get(selected);
-
-        if (hotbarStack.isEmpty() && accessoriesStack.isEmpty()) return;
-
-        if (hotbarStack.isEmpty()) {
-            hotbarStack = accessoriesStack.copyAndEmpty();
-            player.setStackInHand(Hand.MAIN_HAND, hotbarStack);
-        } else if (accessoriesStack.isEmpty()) {
-            accessoriesStack = hotbarStack.copyAndEmpty();
-            accessories.set(selected, accessoriesStack);
+            accessories.setSelected(selected);
         } else {
-            accessories.set(selected, hotbarStack.copyAndEmpty());
-            player.setStackInHand(Hand.MAIN_HAND, accessoriesStack.copyAndEmpty());
+
+            ItemStack hotbarStack = player.getMainHandStack();
+            ItemStack accessoriesStack = accessories.get(selected);
+
+            if (hotbarStack.isEmpty() && accessoriesStack.isEmpty()) return;
+
+            if (hotbarStack.isEmpty()) {
+                hotbarStack = accessoriesStack.copyAndEmpty();
+                player.setStackInHand(Hand.MAIN_HAND, hotbarStack);
+            } else if (accessoriesStack.isEmpty()) {
+                accessoriesStack = hotbarStack.copyAndEmpty();
+                accessories.set(selected, accessoriesStack);
+            } else {
+                accessories.set(selected, hotbarStack.copyAndEmpty());
+                player.setStackInHand(Hand.MAIN_HAND, accessoriesStack.copyAndEmpty());
+            }
+
         }
 
+        Revelation.LOGGER.info("Received packet, slot is {}, should swap: {}", selected, payload.swap());
         RevelationComponents.ACCESSORIES.sync(player);
 
     }
