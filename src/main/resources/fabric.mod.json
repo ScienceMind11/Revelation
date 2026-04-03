@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "revelation",
+	"version": "${version}",
+	"name": "Revelation",
+	"description": ":3",
+	"authors": [
+		"Sember",
+		"Mercury",
+		"Hollowed"
+	],
+	"license": "CC0-1.0",
+	"icon": "assets/revelation/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"org.sember.revelation.Revelation"
+		],
+		"client": [
+			"org.sember.revelation.RevelationClient"
+		]
+	},
+	"mixins": [
+      "revelation.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.5",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
